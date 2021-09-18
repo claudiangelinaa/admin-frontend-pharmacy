@@ -1,0 +1,14 @@
+.Homepage {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #F8FCFF;
+}
+
+.Header {
+    margin: 220px auto;
+}
+
+.Background {
+    background-color: #F8FCFF;
+}
+

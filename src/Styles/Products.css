@@ -1,0 +1,16 @@
+.ProductPage h1 {
+    margin: 30px 100px;
+    width: fit-content;
+}
+
+.Products {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.ProductPage .SearchBar {
+    padding-right: 120px;
+    margin-bottom: 20px;
+    text-align: right;
+}

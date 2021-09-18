@@ -1,0 +1,72 @@
+.Cart h2 {
+    margin: 50px auto;
+    width: fit-content;
+}
+
+.Container {
+    display: flex;
+}
+
+.Container h6 {
+    margin-bottom: 30px;
+}
+
+.Cart .Catalog {
+    border: 1px solid white;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 20px 80px;
+    padding: 20px;
+    width: 600px;
+    height: 600px;
+    border-radius: 12px;
+}
+
+/* .Cart .Catalog .CatalogCard {
+    border: 1px solid black;
+    margin: 20px 0px;
+    width: 500px;
+    height: 300px;
+} */
+
+.CatalogCard .DetailCatalog {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.CatalogCard .DetailCatalog h5 {
+    margin: 20px;
+    height: fit-content;
+}
+
+.DetailCatalog .Icon {
+    width: fit-content;
+    height: fit-content;
+    margin: 60px -150px;
+}
+
+.CatalogCard .ImgContainer {
+    border: 1px solid black;
+    margin: 20px 20px;
+    width: 150px;
+    height: 120px;
+}
+
+.Cart .Price {
+    border: 1px solid white;
+    box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 20px 50px;
+    padding: 20px;
+    width: 600px;
+    height: 350px;
+    border-radius: 12px;
+}
+
+.Container .Price .text {
+    margin-top: 50px;
+}
+
+.Container .Price .text h6 {
+    font-weight: 300;
+    margin-top: 20px;
+}
