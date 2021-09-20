@@ -1,0 +1,7 @@
+.LinkRoute {
+    text-decoration: none;
+    color: black;
+}
+.LinkRoute:hover {
+    color: black;
+}
