@@ -62,7 +62,7 @@ export default function SignIn() {
     e.preventDefault();
     console.log("login:", email, password)
     // dispatch(doLogin({email, password}))
-    axios.post(`http://localhost:5002/users/login`, {email: email,password: password})
+    axios.post(`http://localhost:5001/users/login`, {email: email,password: password})
     .then((res)=>{
       console.log(res)
       localStorage.setItem('access_token', res.data.token)

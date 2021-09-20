@@ -5,7 +5,7 @@ export function doLogin(params) {
     try {
       dispatch({ type: "LOGIN", payload: { isLoading: true } });
       const { data } = await axios.post(
-        `http://localhost:5002/users/login`,
+        `http://localhost:5001/login`,
         params
       );
 
@@ -21,24 +21,6 @@ export function doLogin(params) {
     } catch (err) {
       console.log(err);
     }
-  };
-}
-
-export function doRegister(data) {
-  return (dispatch) => {
-    axios
-      .post(`http://localhost:5002/users/register`, data)
-      .then((res) => {
-        console.log("register:", res);
-        dispatch({
-          type: "LOGIN",
-          payload: {
-            ...res.data,
-            isLogin: true,
-          },
-        });
-      })
-      .catch((err) => console.log(err));
   };
 }
 
