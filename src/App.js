@@ -8,6 +8,7 @@ import ProductsPage from "./Pages/ProductsPage";
 import ProductCustom from "./Pages/ProductCustom";
 import Login from "./Pages/Login"
 import Register from "./Pages/Register"
+import Forbidden from "./Pages/Forbidden";
 
 function App() {
   return (
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route exact path="/Cart">
             <Cart />
+          </Route>
+          <Route exact path="/Forbidden">
+            <Forbidden />
           </Route>
         </Switch>
       </div>
