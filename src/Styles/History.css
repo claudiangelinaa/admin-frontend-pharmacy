@@ -1,8 +1,29 @@
-
 .History {
     padding: 70px;
 }
 
+.History h2 {
+    width: fit-content;
+}
+
+.History .SearchBar {
+    padding-right: 10px;
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.History .UsersFilter {
+    margin-top: -50px;
+    float: right;
+}
+
+.History .DateFilter {
+    margin-top: -50px;
+    margin-right: 80px;
+    float: right;
+}
+
 .History .TableHistory {
     margin: 50px auto;
+    text-align: center;
 }

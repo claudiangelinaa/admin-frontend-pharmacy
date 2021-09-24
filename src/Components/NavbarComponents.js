@@ -35,8 +35,13 @@ export default function NavbarComponents() {
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link>
-              <Link className="LinkRoute" to="/History">
-                History
+              <Link className="LinkRoute" to="/Transaction">
+                User Transaction
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
+              <Link className="LinkRoute" to="/Report">
+                Sales Report
               </Link>
             </Nav.Link>
           </Nav>
@@ -47,14 +52,6 @@ export default function NavbarComponents() {
             <Link className="LinkRoute" to="/Login">
               Login
             </Link>
-        </div>
-        
-        <div style={{ marginRight: 20 }}>
-          <Badge badgeContent={4} color="error">
-            <Link className="LinkRoute" to="/Cart">
-              <ShoppingCartOutlinedIcon />
-            </Link>
-          </Badge>
         </div>
 
         <div style={{ marginRight: 20 }}>

@@ -1,13 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavbarComponents from "./Components/NavbarComponents";
-import Cart from "./Pages/Cart";
 import History from "./Pages/History";
 import Homepage from "./Pages/Homepage";
 import ProductsPage from "./Pages/ProductsPage";
 import ProductCustom from "./Pages/ProductCustom";
-import Login from "./Pages/Login"
-import Register from "./Pages/Register"
+import Login from "./Pages/Login";
+import Report from "./Pages/Report";
 
 function App() {
   return (
@@ -25,17 +24,14 @@ function App() {
           <Route exact path="/ProductCustom">
             <ProductCustom />
           </Route>
-          <Route exact path="/History">
+          <Route exact path="/Transaction">
             <History />
           </Route>
           <Route exact path="/Login">
             <Login />
           </Route>
-          <Route exact path="/Register">
-            <Register />
-          </Route>
-          <Route exact path="/Cart">
-            <Cart />
+          <Route exact path="/Report">
+            <Report />
           </Route>
         </Switch>
       </div>
