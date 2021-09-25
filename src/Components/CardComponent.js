@@ -33,25 +33,32 @@ export default function CardComponent(props) {
     product: [],
   });
 
-  function productToCart() {
-    setCart((prevState) => ({
-      ...prevState,
-      product: prevState.product.concat(props),
-    }));
-    localStorage.setItem("cart", JSON.stringify(cart));
+  function onSubmit() {
+    let data = {
+      id: props.id,
+      nama: props.nama,
+      harga: props.harga,
+      foto_produk: props.foto_produk,
+      stock: props.stock,
+      deskripsi: props.deskripsi,
+      quantity: 1,
+    };
+    let getData = JSON.parse(localStorage.getItem("cart")) || [];
+    getData.push(data);
+    localStorage.setItem("cart", JSON.stringify(getData));
   }
 
   // function getCartTotal(){
   //   return cart.reduce((sum, {quantity}) => sum + quantity, 0)
   // }
 
-  function onSubmit() {
-    productToCart();
-  }
+  // function onSubmit() {
+  //   productToCart();
+  // }
 
-  useEffect(() => {
-    productToCart();
-  }, []);
+  // useEffect(() => {
+  //   productToCart();
+  // }, []);
 
   return (
     <Card className={classes.root}>
