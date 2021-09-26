@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../Store/Actions/authAction';
+import { url } from "../helpers/urlConfig"
 import axios from 'axios'
 import { useHistory } from 'react-router';
 
@@ -63,7 +64,7 @@ export default function SignIn() {
     e.preventDefault();
     console.log("login:", email, password)
     // dispatch(doLogin({email, password}))
-    axios.post(`http://localhost:5002/users/login`, {email: email,password: password})
+    axios.post(`${url}/users/login`, {email: email,password: password})
     .then((res)=>{
       console.log(res)
       localStorage.setItem('access_token', res.data.token)

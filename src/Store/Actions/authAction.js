@@ -1,13 +1,11 @@
 import axios from "axios";
+import { url } from "../../helpers/urlConfig";
 
 export function doLogin(params) {
   return async (dispatch) => {
     try {
       dispatch({ type: "LOGIN", payload: { isLoading: true } });
-      const { data } = await axios.post(
-        `http://localhost:5002/users/login`,
-        params
-      );
+      const { data } = await axios.post(`${url}/users/login`, params);
 
       dispatch({
         type: "LOGIN",

@@ -2,6 +2,8 @@ import {
   ADD_TRANSACTION,
   LOADING_TRANSACTION,
   FETCH_TRANSACTION,
+  FETCH_TRANSACTION_REPORT,
+  FILTER_TRANSACTION_REPORT,
 } from "../Actions/actionType";
 import axios from "axios";
 import { url } from "../../helpers/urlConfig";
@@ -27,28 +29,69 @@ export function loadingTransactions(data) {
   };
 }
 
-// export function insertTransaction(data) {
-//   return (dispatch) => {
-//     dispatch(loadingTransactions(true));
+export function fetchTransactionsReport(data) {
+  return {
+    type: FETCH_TRANSACTION_REPORT,
+    payload: data,
+  };
+}
 
-//     axios
-//       .post(`${url}/insertTransaction`, data)
-//       .then((res) => {
-//         dispatch(loadingTransactions(false));
-//         dispatch(addTransactions(res.data));
-//       })
+export function filterTransactionsReports(data) {
+  return {
+    type: FILTER_TRANSACTION_REPORT,
+    payload: data,
+  };
+}
 
-//       .catch((err) => {
-//         alert(err);
-//       });
-//   };
-// }
+export function fetchReport(params) {
+  return (dispatch) => {
+    dispatch(loadingTransactions(true));
 
-export function fetchTransaction() {
+    axios
+      .get(`${url}/sales-report?date=${params === "" ? "" : Number(params)}`)
+      .then((res) => {
+        let data = res.data.result;
+        let result = data.reduce((acc, ele) => {
+          let filtered = acc.filter((el) => el.id == ele.id);
+          if (filtered.length > 0) {
+            filtered[0]["nama"].push(ele.nama);
+            filtered[0]["quantity"].push(ele.quantity);
+          } else {
+            let element = {};
+            element["id"] = ele.id;
+            element["nama_user"] = ele.nama_user;
+            element["nama"] = [];
+            element["quantity"] = [];
+            element["alamat"] = ele.alamat_pengiriman;
+            element["tanggal"] = ele.tanggal;
+            element["nama"].push(ele.nama);
+            element["quantity"].push(ele.quantity);
+            element["total"] = ele.total;
+            acc.push(element);
+          }
+          return acc;
+        }, []);
+
+        let total = res.data.countTransaction.map((val) => {
+          return val.total;
+        });
+
+        dispatch(loadingTransactions(false));
+        dispatch(filterTransactionsReports(total));
+        dispatch(fetchTransactionsReport(result));
+      })
+
+      .catch((err) => {
+        alert(err);
+      });
+  };
+}
+
+export function fetchTransaction(params) {
   return (dispatch) => {
     dispatch(loadingTransactions(true));
     axios
-      .get(`${url}/getTransaction`)
+      .get(`${url}/getTransaction?date=${params === "" ? "" : Number(params)}`)
       .then((res) => {
         let data = res.data.result;
         let result = data.reduce((acc, ele) => {
