@@ -32,7 +32,7 @@ export default function NavbarComponents() {
   return (
     <div>
       {console.log("auth:", auth)}
-      {(auth.role !== 'Admin' ) && (auth.isLogin === true) && handleForbidden()}
+      {(auth.role.toLowerCase() !== 'admin' ) && (auth.isLogin === true) && handleForbidden()}
       <Navbar bg="light" variant="light">
         {/* <Navbar.Brand style={{ marginLeft: 20 }}>
           <Link className="LinkRoute"  to="/">
@@ -58,11 +58,18 @@ export default function NavbarComponents() {
                 </Link>
               </NavDropdown.Item>
             </NavDropdown>
-            <Nav.Link>
-              <Link className="LinkRoute" to="/Transaction">
-                User Transaction
-              </Link>
-            </Nav.Link>
+            <NavDropdown title="User Transaction" id="navbarScrollingDropdown">
+              <NavDropdown.Item>
+                <Link className="LinkRoute" to="/Transaction">
+                  Obat Jadi
+                </Link>
+              </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link className="LinkRoute" to="/RacikTransaction">
+                  Obat Racik
+                </Link>
+              </NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link>
               <Link className="LinkRoute" to="/Report">
                 Sales Report

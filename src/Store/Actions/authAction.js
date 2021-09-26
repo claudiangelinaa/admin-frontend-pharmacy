@@ -3,13 +3,13 @@ import { url } from "../../helpers/urlConfig";
 
 export function doLogin(data) {
   return async (dispatch) => {
-// <<<<<<< feature/sales-report
-    try {
-      dispatch({ type: "LOGIN", payload: { isLoading: true } });
-      const { data } = await axios.post(`${url}/users/login`, params);
+// // <<<<<<< feature/sales-report
+//     try {
+//       dispatch({ type: "LOGIN", payload: { isLoading: true } });
+//       const { data } = await axios.post(`${url}/users/login`, params);
 
-// =======
-// >>>>>>> development
+// // =======
+// // >>>>>>> development
       dispatch({
         type: "LOGIN",
         payload: {
@@ -37,7 +37,7 @@ export function checkLogin() {
     const token = await localStorage.getItem('access_token');
     console.log("[checkLogin] token:", token);
     if (token) {
-      const { data } = await axios.get(`http://localhost:5001/users/check-token`, {headers : { "Authorization" : token }});
+      const { data } = await axios.get(`${url}/users/check-token`, {headers : { "Authorization" : token }});
       console.log("[checkLogin] data:", data);
       dispatch({
         type: 'LOGIN',

@@ -62,13 +62,7 @@ export default function SignIn() {
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-// <<<<<<< feature/sales-report
-    console.log("login:", email, password)
-    // dispatch(doLogin({email, password}))
-    axios.post(`${url}/users/login`, {email: email,password: password})
-// =======
-//     axios.post(`http://localhost:5001/users/login`,({email,password}))
-// >>>>>>> development
+    axios.post(`${url}/users/login`,({email,password}))
     .then((res)=>{
       console.log(res);
       if(res.data.status !== "error") {
