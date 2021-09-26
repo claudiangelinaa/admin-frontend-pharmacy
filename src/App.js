@@ -2,6 +2,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import NavbarComponents from "./Components/NavbarComponents";
 import History from "./Pages/History";
+import RacikHistory from "./Pages/RacikHistory";
 import Homepage from "./Pages/Homepage";
 import ProductsPage from "./Pages/ProductsPage";
 import ProductCustom from "./Pages/ProductCustom";
@@ -28,6 +29,9 @@ function App() {
           </Route>
           <Route exact path="/Transaction">
             <History />
+          </Route>
+          <Route exact path="/RacikTransaction">
+            <RacikHistory />
           </Route>
           <Route exact path="/Login">
             <Login />
