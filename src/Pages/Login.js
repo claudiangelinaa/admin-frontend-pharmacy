@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../Store/Actions/authAction';
+import { url } from "../helpers/urlConfig"
 import axios from 'axios'
 import { useHistory } from 'react-router';
 
@@ -61,7 +62,13 @@ export default function SignIn() {
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:5001/users/login`,({email,password}))
+// <<<<<<< feature/sales-report
+    console.log("login:", email, password)
+    // dispatch(doLogin({email, password}))
+    axios.post(`${url}/users/login`, {email: email,password: password})
+// =======
+//     axios.post(`http://localhost:5001/users/login`,({email,password}))
+// >>>>>>> development
     .then((res)=>{
       console.log(res);
       if(res.data.status !== "error") {

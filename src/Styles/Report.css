@@ -1,0 +1,57 @@
+.Report {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.Report .TableBorder {
+    border: 1px solid transparent;
+    border-radius: 12px;
+    margin: 20px;
+    width: 80%;
+    height: 80%;
+}
+
+.Dropdown {
+    text-align: right;
+    margin: 50px 50px 0px 0px;
+    max-width: 74%;
+}
+
+.Chart {
+    margin: 20px 130px;
+    width: 67%;
+    height: 60%;
+}
+
+.TextHeader {
+    display: grid;
+    grid-template-columns: auto auto;
+    margin: 20px;
+}
+
+.TextHeader h5 {
+    font-weight: 400;
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+.Report .Table {
+    padding: 0px 40px 40px 40px;
+    margin: 0px 70px;
+}
+
+.Report h2 {
+    width: fit-content;
+    margin: 50px 50px 50px 150px;
+}
+
+.TableHeads {
+    display: flex;
+    flex-direction: column;
+}
+
+.Paginate {
+    display: flex;
+    justify-content: center;
+}
