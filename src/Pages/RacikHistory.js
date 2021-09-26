@@ -54,7 +54,7 @@ export default function RacikHistory() {
 
   function filterTransaction(text) {
     let data = transactionList.filter((value) => {
-      return value.nama_user.toLowerCase().includes(text.toLowerCase());
+      return value.nama.toLowerCase().includes(text.toLowerCase());
     });
 
     setFilteredTransaction(data);
