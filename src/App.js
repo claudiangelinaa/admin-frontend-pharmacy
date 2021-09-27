@@ -7,6 +7,7 @@ import Homepage from "./Pages/Homepage";
 import ProductsPage from "./Pages/ProductsPage";
 import ProductCustom from "./Pages/ProductCustom";
 import Report from "./Pages/Report";
+import Revenue from "./Pages/Revenue";
 import Login from "./Pages/Login"
 import Register from "./Pages/Register"
 import Forbidden from "./Pages/Forbidden";
@@ -39,6 +40,8 @@ function App() {
           <Route exact path="/Report">
             <Report />
           </Route>
+          <Route exact path="/Revenue">
+            <Revenue />
           <Route exact path="/Forbidden">
             <Forbidden />
           </Route>
