@@ -26,6 +26,37 @@ export default function History() {
     dispatch(fetchTransaction(month));
   }, [month]);
 
+  function title() {
+    switch (month) {
+      case 1:
+        return "January";
+      case 2:
+        return "February";
+      case 3:
+        return "March";
+      case 4:
+        return "April";
+      case 5:
+        return "May";
+      case 6:
+        return "June";
+      case 7:
+        return "July";
+      case 8:
+        return "August";
+      case 9:
+        return "September";
+      case 10:
+        return "October";
+      case 11:
+        return "November";
+      case 12:
+        return "December";
+      default:
+        return "All Months";
+    }
+  }
+
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
@@ -54,9 +85,9 @@ export default function History() {
     <div className="History">
       <h2>Users Transaction</h2>
       <div className="SearchBar">
-      <DropdownButton
+        <DropdownButton
           id="dropdown-basic-button"
-          title="Filter By Months"
+          title={title()}
           variant="secondary"
           style={{ paddingRight: 30, marginTop: 10 }}
         >
@@ -83,13 +114,17 @@ export default function History() {
         />
       </div>
 
-      <div className="Paginate">
-        <PaginateComponent
-          postsPerPage={postsPerPage}
-          totalPosts={historyTransaction.length}
-          paginate={paginate}
-        />
-      </div>
+      {filteredName ? (
+        <></>
+      ) : (
+        <div className="Paginate">
+          <PaginateComponent
+            postsPerPage={postsPerPage}
+            totalPosts={historyTransaction.length}
+            paginate={paginate}
+          />
+        </div>
+      )}
     </div>
   );
 }

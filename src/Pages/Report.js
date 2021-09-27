@@ -19,19 +19,36 @@ export default function Report() {
   const { reportTransaction, filterTransactionReport } = useSelector(
     (state) => state.transactionReducer
   );
-  // let January = [];
-  // let February = [];
-  // let March = [];
-  // let April = [];
-  // let May = [];
-  // let June = [];
-  // let July = [];
-  // let August = [];
-  // let September = [];
-  // let October = [];
-  // let November = [];
-  // let December = [];
-  // let dataFiltered = [];
+  function title() {
+    switch (month) {
+      case 1:
+        return "January";
+      case 2:
+        return "February";
+      case 3:
+        return "March";
+      case 4:
+        return "April";
+      case 5:
+        return "May";
+      case 6:
+        return "June";
+      case 7:
+        return "July";
+      case 8:
+        return "August";
+      case 9:
+        return "September";
+      case 10:
+        return "October";
+      case 11:
+        return "November";
+      case 12:
+        return "December";
+      default:
+        return "All Months";
+    }
+  }
 
   useEffect(() => {
     chartData();
@@ -86,80 +103,16 @@ export default function Report() {
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  //Get all date
-  // function dateFilters() {
-  //   let finalFiltered = [];
-  //   const date = reportTransaction.forEach((val) => {
-  //     dataFiltered.push(val.tanggal);
-  //   });
-
-  //   for (let i = 0; i < dataFiltered.length; i++) {
-  //     if (dataFiltered[i].includes("-01-")) {
-  //       January.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-02-")) {
-  //       February.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-03-")) {
-  //       March.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-04-")) {
-  //       April.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-05-")) {
-  //       May.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-06-")) {
-  //       June.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-07-")) {
-  //       July.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-08-")) {
-  //       August.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-09-")) {
-  //       September.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-10-")) {
-  //       October.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-11-")) {
-  //       November.push(dataFiltered[i]);
-  //     }
-  //     if (dataFiltered[i].includes("-12-")) {
-  //       December.push(dataFiltered[i]);
-  //     }
-  //   }
-
-  //   finalFiltered = [
-  //     January.length,
-  //     February.length,
-  //     March.length,
-  //     April.length,
-  //     May.length,
-  //     June.length,
-  //     July.length,
-  //     August.length,
-  //     September.length,
-  //     October.length,
-  //     November.length,
-  //     December.length,
-  //   ];
-
-  //   return finalFiltered;
-  // }
-
   return (
     <div className="Report">
       <h2>Sales Report</h2>
       <div className="Chart">
         <Line data={chart} />
       </div>
-      <div className="Dropdown">
+      <div className="Dropdowns">
         <DropdownButton
           id="dropdown-basic-button"
-          title="Filter By Months"
+          title={title()}
           variant="secondary"
         >
           <Dropdown.Item onClick={() => setMonth("")}>All Months</Dropdown.Item>

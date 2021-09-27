@@ -4,6 +4,7 @@ import {
   FETCH_TRANSACTION,
   FETCH_TRANSACTION_REPORT,
   FILTER_TRANSACTION_REPORT,
+  FETCH_TRANSACTION_REVENUE,
 } from "../Actions/actionType";
 import axios from "axios";
 import { url } from "../../helpers/urlConfig";
@@ -39,6 +40,13 @@ export function fetchTransactionsReport(data) {
 export function filterTransactionsReports(data) {
   return {
     type: FILTER_TRANSACTION_REPORT,
+    payload: data,
+  };
+}
+
+export function fetchTransactionsRevenues(data) {
+  return {
+    type: FETCH_TRANSACTION_REVENUE,
     payload: data,
   };
 }
@@ -116,6 +124,22 @@ export function fetchTransaction(params) {
         }, []);
         dispatch(loadingTransactions(false));
         dispatch(fetchTransactions(result));
+      })
+
+      .catch((err) => {
+        alert(err);
+      });
+  };
+}
+
+export function fetchRevenueTransaction(params) {
+  return (dispatch) => {
+    dispatch(loadingTransactions(true));
+    axios
+      .get(`${url}/revenue?date=${params === "" || NaN ? "" : Number(params)}`)
+      .then((res) => {
+        dispatch(loadingTransactions(false));
+        dispatch(fetchTransactionsRevenues(res.data.result));
       })
 
       .catch((err) => {

@@ -4,8 +4,6 @@ import { Table } from "react-bootstrap";
 import "../Styles/Components/TableComponent.css";
 
 export default function TableComponent(props) {
-  // const { historyTransaction } = useSelector(state => state.transactionReducer)
-
   return (
     <div>
       <Table striped bordered hover>

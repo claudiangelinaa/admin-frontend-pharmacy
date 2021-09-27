@@ -3,11 +3,13 @@ import {
   LOADING_TRANSACTION,
   FETCH_TRANSACTION,
   FETCH_TRANSACTION_REPORT,
-  FILTER_TRANSACTION_REPORT
+  FILTER_TRANSACTION_REPORT,
+  FETCH_TRANSACTION_REVENUE,
 } from "../Actions/actionType";
 
 const initialState = {
   historyTransaction: [],
+  revenueTransaction: [],
   addTransaction: [],
   reportTransaction: [],
   filterTransactionReport: [],
@@ -41,6 +43,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         filterTransactionReport: action.payload,
+      };
+    }
+
+    case FETCH_TRANSACTION_REVENUE: {
+      return {
+        ...state,
+        revenueTransaction: action.payload,
       };
     }
 

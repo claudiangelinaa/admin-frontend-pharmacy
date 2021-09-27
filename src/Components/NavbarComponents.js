@@ -44,6 +44,11 @@ export default function NavbarComponents() {
                 Sales Report
               </Link>
             </Nav.Link>
+            <Nav.Link>
+              <Link className="LinkRoute" to="/Revenue">
+                Revenue
+              </Link>
+            </Nav.Link>
           </Nav>
         </Container>
 
