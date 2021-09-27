@@ -62,14 +62,17 @@ export default function SignIn() {
 
   const handleLoginClick = (e) => {
     e.preventDefault();
-    console.log("login:", email, password)
-    // dispatch(doLogin({email, password}))
-    axios.post(`${url}/users/login`, {email: email,password: password})
+    axios.post(`${url}/users/login`,({email,password}))
     .then((res)=>{
-      console.log(res)
-      localStorage.setItem('access_token', res.data.token)
-      alert(`Berhasil Login`)
-      history.push("/")
+      console.log(res);
+      if(res.data.status !== "error") {
+        dispatch(doLogin(res.data))
+        localStorage.setItem('access_token', res.data.token)
+        alert(`Berhasil Login`)
+        history.push("/")
+      } else {
+        alert('Gagal login')
+      }
     })
     .catch(err=>{
       console.log(err)
