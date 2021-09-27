@@ -60,6 +60,19 @@ export default function TableComponent(props) {
     })
     .then((res) => {
       console.log(res.data)
+      alert(`Sukses input obat!`)
+      setDialogProcess(false)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+  const handleRejectOrder = () => {
+    alert(`Rejected!`)
+    axios.post(`${url}/updateTransactionStatus/${props.id}`, { status: 2 })
+    .then((res) => {
+      alert(res.data)
     })
     .catch((err) => {
       console.log(err)
@@ -159,15 +172,27 @@ export default function TableComponent(props) {
             <td>{props.tanggal}</td>
             <td>
               <div
-                className={props.status === "0" ? "waitPayment" : "donePayment"}
+                className={props.status === "4" ? "donePayment" : "waitPayment"}
               >
-                {props.status === "0" ? "Waiting for payment" : "Done Payment"}
+                {props.status === "0" ? "PENDING" : props.status === "1" ? "ORDER PROCESSED" : props.status === "2" ? "ORDER REJECTED" : props.status === "3" ? "WAITING FOR PAYMENT" : "DONE PAYMENT"}
               </div>
             </td>
             <td>
-              <Button onClick={() => setDialogProcess(true)}>
-                Process
-              </Button>
+              {
+                props.status === "0" ? 
+                (
+                  <>
+                    <Button variant="outlined" color="primary" className="my-1 mx-1" onClick={() => setDialogProcess(true)}>
+                      Process Order
+                    </Button>
+                    <Button variant="contained" color="secondary" className="my-1 mx-1" onClick={() => handleRejectOrder()}>
+                      Reject Order
+                    </Button>
+                  </>
+                ) : (
+                  <Typography>Already processed</Typography>
+                )
+              }
             </td>
           </tr>
         </tbody>

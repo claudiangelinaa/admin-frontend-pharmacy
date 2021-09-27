@@ -8,7 +8,7 @@ import { convertToRupiah } from "../helpers/convertToRupiah";
 import { Button } from "react-bootstrap";
 import "../Styles/History.css";
 import PaginateComponent from "../Components/PaginateComponent";
-import RacikDisplayComponent from "../Components/RacikHistoryDisplayComponent";
+import RacikHistoryDisplayComponent from "../Components/RacikHistoryDisplayComponent";
 import { url } from "../helpers/urlConfig";
 import axios from "axios";
 
@@ -62,7 +62,7 @@ export default function RacikHistory() {
 
   return (
     <div className="History">
-      <h2>Users Transaction</h2>
+      <h2>Users Racik Transaction</h2>
       <div className="SearchBar">
         <SearchBarComponent filterByName={filterByName} />
       </div>
@@ -70,7 +70,7 @@ export default function RacikHistory() {
         Date
       </Button> */}
       <div className="TableHistory">
-        <RacikDisplayComponent 
+        <RacikHistoryDisplayComponent 
           isLoading={isLoading}
           currentPosts={filteredName ? filteredTransaction : currentPosts }
         />

@@ -42,6 +42,7 @@ function App() {
           </Route>
           <Route exact path="/Revenue">
             <Revenue />
+          </Route>
           <Route exact path="/Forbidden">
             <Forbidden />
           </Route>
