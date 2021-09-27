@@ -4,7 +4,7 @@ import LoadingComponent from "./LoadingComponent";
 import RacikTableComponent from "./RacikTableComponent";
 import { convertToRupiah } from "../helpers/convertToRupiah";
 
-export default function RacikDisplayComponent(props) {
+export default function RacikHistoryDisplayComponent(props) {
   console.log(props)
     if (props.isLoading) {
         return (

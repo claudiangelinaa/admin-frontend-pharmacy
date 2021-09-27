@@ -28,9 +28,9 @@ export default function TableComponent(props) {
             <td>{props.total}</td>
             <td>
               <div
-                className={props.status === "0" ? "waitPayment" : "donePayment"}
+                className={props.status === "4" ? "donePayment" : "waitPayment"}
               >
-                {props.status === "0" ? "Waiting for payment" : "Done Payment"}
+                {props.status === "0" ? "PENDING" : props.status === "1" ? "ORDER PROCESSED" : props.status === "2" ? "ORDER REJECTED" : props.status === "3" ? "WAITING FOR PAYMENT" : "DONE PAYMENT"}
               </div>
             </td>
           </tr>
