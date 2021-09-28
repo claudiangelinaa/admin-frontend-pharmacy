@@ -9,21 +9,20 @@ import { useDispatch } from "react-redux";
 import { addProduct, fetchProducts } from "../Store/Actions/productsAction";
 import LoadingComponent from "../Components/LoadingComponent"
 import ButtonComponent from "../Components/ButtonComponent";
-import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select } from "@material-ui/core";
-import { ADD_PRODUCT } from "../Store/Actions/actionType";
-// import { Button } from "bootstrap";
+import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select, Input } from "@material-ui/core";
 
 export default function ProductsPage() {
   // const [products, setProducts] = useState([]);
   const { products, isLoading } = useSelector(state => state.productsReducer)
   const dispatch = useDispatch()
-  const history = useHistory();
   const [dialogAdd, setDialogAdd] = useState(false)
   const [nama, setNama] = useState("")
   const [deskripsi, setDeskripsi] = useState("")
   const [kategori, setKategori] = useState("")
   const [stock, setStock] = useState()
   const [harga, setHarga] = useState()
+
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleAddData = () =>{
     setDialogAdd(true)
@@ -38,15 +37,22 @@ export default function ProductsPage() {
       deskripsi
     }
 
-    dispatch(addProduct(newProduct))
-        alert(`Berhasil tambah data`)
-        setDialogAdd(false)
-        setNama("")
-        setHarga("")
-        setKategori("")
-        setDeskripsi("")
-        setStock("")
-      
+    let fd = new FormData();
+    fd.append('data', JSON.stringify(newProduct));
+    fd.append('images', selectedFiles[0]);
+    console.log("selectfile:", selectedFiles)
+    console.log("fd", fd)
+    console.log("newProduct", JSON.stringify(newProduct))
+
+    dispatch(addProduct(fd))
+    alert(`Berhasil tambah data`)
+    setDialogAdd(false)
+    setNama("")
+    setHarga("")
+    setKategori("")
+    setDeskripsi("")
+    setStock("")
+    setSelectedFiles([])
   }
 
   useEffect(() => {
@@ -61,18 +67,19 @@ export default function ProductsPage() {
     )
   }
 
+  const selectFile = (e) => {
+    setSelectedFiles(e.target.files);
+    console.log(selectedFiles);
+  }
+
   return (
     <div className="ProductPage">
       <h1>Products</h1>
+      <div>
+        <Dialog open={dialogAdd} onClose={() => setDialogAdd(false)}>
+          <DialogTitle>ADD NEW DATA</DialogTitle>
 
-        <Button
-          onClick={()=>handleAddData()}>ADD DATA</Button>
-        <div>
-          <Dialog open={dialogAdd} onClose={() => setDialogAdd(false)}>
-            <DialogTitle>ADD NEW DATA</DialogTitle>
-            <form >
-
-            <Grid container spacing={2}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 autoComplete="fname"
@@ -133,42 +140,58 @@ export default function ProductsPage() {
               />
             </Grid>
 
-            <Grid item xs={12} sm={6} >
-            <InputLabel htmlFor="filled-age-native-simple">Category</InputLabel>
-            <Select
-                native
-                variant="outlined"
-                value={kategori}
-                inputProps={{
-                    name: 'gender',
-                    id: 'outlined-gender-native-simple',
-                }}
-                onChange={e=>{setKategori(e.target.value)}}
-            >
-                <option aria-label="None" value="" />
-                <option value='BATUK DAN FLU'>BATUK DAN FLU</option>
-                <option value='DEMAM'>DEMAM</option>
-                <option value='ANTI NYERI'>ANTI NYERI</option>
-                <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
-                <option value='ALERGI'>ALERGI</option>
-                <option value='HIPERTENSI'>HIPERTENSI</option>
-                <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
-
-            </Select>
+            <Grid item xs={12} >
+              <InputLabel htmlFor="filled-age-native-simple">Category</InputLabel>
+              <Select
+                  native
+                  variant="outlined"
+                  value={kategori}
+                  inputProps={{
+                      name: 'gender',
+                      id: 'outlined-gender-native-simple',
+                  }}
+                  onChange={e=>{setKategori(e.target.value)}}
+              >
+                  <option aria-label="None" value="" />
+                  <option value='BATUK DAN FLU'>BATUK DAN FLU</option>
+                  <option value='DEMAM'>DEMAM</option>
+                  <option value='ANTI NYERI'>ANTI NYERI</option>
+                  <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
+                  <option value='ALERGI'>ALERGI</option>
+                  <option value='HIPERTENSI'>HIPERTENSI</option>
+                  <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+              </Select>
             </Grid>
-
-            <DialogActions>
-              <Button onClick={() => setDialogAdd(false)}>Cancel</Button>
-              <Button onClick={() => handleSubmit()}>Submit</Button>
-            </DialogActions>
+            <Grid item xs={12}>
+              <InputLabel htmlFor="filled-age-native-simple">Foto Obat Jadi</InputLabel>
+              <div className="row mb-3">
+                <div className="col-3 mx-1 my-2">
+                  <label htmlFor="contained-button-file">
+                    <input accept="image/*" id="contained-button-file" multiple type="file" hidden onChange={selectFile} />
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                </div>
+                <div className="col-5 my-3">
+                  {selectedFiles && selectedFiles.length > 0 ? selectedFiles[0].name : "No file chosen"}
+                </div>
+              </div>
             </Grid>
-            </form>
-
-          </Dialog>
-
-        </div>
+          </Grid>
+          <DialogActions>
+            <Button onClick={() => setDialogAdd(false)}>Cancel</Button>
+            <Button onClick={() => handleSubmit()}>Submit</Button>
+          </DialogActions>
+        </Dialog>
+      </div>
       <div className="SearchBar">
         <SearchBarComponent />
+      </div>
+      <div className="AddProductButton">
+        <Button variant="outlined" onClick={()=>handleAddData()}>
+          ADD OBAT JADI
+        </Button>
       </div>
       <div className="Products">
         {products.map(val=>{
