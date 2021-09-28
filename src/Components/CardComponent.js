@@ -12,7 +12,9 @@ import ButtonComponent from "../Components/ButtonComponent";
 import { convertToRupiah } from "../helpers/convertToRupiah";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { fetchProduct } from "../Store/Actions/productsAction";
+import { editProduct, fetchProduct } from "../Store/Actions/productsAction";
+import { deleteProduct } from "../Store/Actions/productsAction";
+import { Dialog, DialogActions, DialogTitle, Grid, InputLabel, Select, TextField } from "@material-ui/core";
 
 const useStyles = makeStyles({
   root: {
@@ -28,26 +30,41 @@ const useStyles = makeStyles({
 
 export default function CardComponent(props) {
   const history = useHistory();
+  const dispatch = useDispatch()
   const classes = useStyles();
+
+  const [dialogEdit, setDialogEdit] = useState(false)
+  const [nama, setNama] = useState(props.nama)
+  const [deskripsi, setDeskripsi] = useState(props.deskripsi)
+  const [kategori, setKategori] = useState(props.kategori)
+  const [stock, setStock] = useState(props.stock)
+  const [harga, setHarga] = useState(props.harga)
+
+
   const [cart, setCart] = useState({
     product: [],
   });
 
   function onSubmit() {
     let data = {
-      id: props.id,
-      nama: props.nama,
-      harga: props.harga,
-      foto_produk: props.foto_produk,
-      stock: props.stock,
-      deskripsi: props.deskripsi,
-      quantity: 1,
+      nama,
+      harga,
+      // foto_produk,
+      stock,
+      kategori,
+      deskripsi
     };
-    let getData = JSON.parse(localStorage.getItem("cart")) || [];
-    getData.push(data);
-    localStorage.setItem("cart", JSON.stringify(getData));
+
+    dispatch(editProduct(props.id, data))
+    setDialogEdit(false)
+    // let getData = JSON.parse(localStorage.getItem("cart")) || [];
+    // getData.push(data);
+    // localStorage.setItem("cart", JSON.stringify(getData));
   }
 
+  const handleEdit = () =>{
+    setDialogEdit(true)
+  }
   // function getCartTotal(){
   //   return cart.reduce((sum, {quantity}) => sum + quantity, 0)
   // }
@@ -61,8 +78,9 @@ export default function CardComponent(props) {
   // }, []);
 
   return (
+    <div>
     <Card className={classes.root}>
-      {console.log(props)}
+      {/* {console.log(props)} */}
       <CardActionArea>
         <CardMedia className={classes.media} image={props.foto_produk} />
         <CardContent>
@@ -85,8 +103,109 @@ export default function CardComponent(props) {
       </CardActionArea>
       <CardActions>
         {/* <button onClick={onSubmit}>Add to cart</button> */}
-        <ButtonComponent title={"Add To Cart"} onSubmit={() => onSubmit()} />
+        {/* <ButtonComponent title={"Add To Cart"} onSubmit={() => onSubmit()} /> */}
+            <Button onClick={()=>handleEdit()}>Edit</Button>
+            <Button onClick={()=> dispatch(deleteProduct(props.id))}>Delete</Button>
       </CardActions>
     </Card>
+
+    <Dialog open={dialogEdit} onClose={() => setDialogEdit(false)}>
+            <DialogTitle>EDIT DATA</DialogTitle>
+            <form >
+
+            <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="fname"
+                name="Nama"
+                variant="outlined"
+                required
+                fullWidth
+                id="Nama"
+                label="Nama"
+                autoFocus
+                value={nama}
+                onChange={e => setNama(e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="Deskripsi"
+                name="Deskripsi"
+                variant="outlined"
+                required
+                fullWidth
+                id="Deskripsi"
+                label="Deskripsi"
+                autoFocus
+                value={deskripsi}
+                onChange={e => setDeskripsi(e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="fname"
+                name="Harga"
+                variant="outlined"
+                required
+                fullWidth
+                id="Harga"
+                label="Harga"
+                autoFocus
+                value={harga}
+                onChange={e => setHarga(e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                autoComplete="stock"
+                name="Stock"
+                variant="outlined"
+                required
+                fullWidth
+                id="Stock"
+                label="Stock"
+                autoFocus
+                value={stock}
+                onChange={e => setStock(e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12} sm={6} >
+            <InputLabel htmlFor="filled-age-native-simple">Category</InputLabel>
+            <Select
+                native
+                variant="outlined"
+                value={kategori}
+                inputProps={{
+                    name: 'gender',
+                    id: 'outlined-gender-native-simple',
+                }}
+                onChange={e=>{setKategori(e.target.value)}}
+            >
+                <option aria-label="None" value="" />
+                <option value='BATUK DAN FLU'>BATUK DAN FLU</option>
+                <option value='DEMAM'>DEMAM</option>
+                <option value='ANTI NYERI'>ANTI NYERI</option>
+                <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
+                <option value='ALERGI'>ALERGI</option>
+                <option value='HIPERTENSI'>HIPERTENSI</option>
+                <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+
+            </Select>
+            </Grid>
+
+            <DialogActions>
+              <Button onClick={() => setDialogEdit(false)}>Cancel</Button>
+              <Button onClick={() => onSubmit()}>Submit</Button>
+            </DialogActions>
+            </Grid>
+            </form>
+
+          </Dialog>
+    </div>
   );
 }

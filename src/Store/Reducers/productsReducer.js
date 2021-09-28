@@ -3,6 +3,7 @@ import {
   LOADING_PRODUCTS,
   LOAD_DETAIL_PRODUCT,
   LOADING_DETAIL_PRODUCT,
+  ADD_PRODUCT
 } from "../Actions/actionType";
 
 const initialState = {
@@ -38,6 +39,13 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload,
+      };
+    }
+
+    case ADD_PRODUCT: {
+      return {
+        ...state,
+        products: [...state.products, action.payload],
       };
     }
 
