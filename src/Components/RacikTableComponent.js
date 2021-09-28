@@ -14,7 +14,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import NumericInput from 'material-ui-numeric-input';
 import { fetchBahanBaku } from "../Store/Actions/bahanBakuAction";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
