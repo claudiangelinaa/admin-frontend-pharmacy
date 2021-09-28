@@ -39,23 +39,22 @@ export default function CardComponent(props) {
   const [kategori, setKategori] = useState(props.kategori)
   const [stock, setStock] = useState(props.stock)
   const [harga, setHarga] = useState(props.harga)
-
-
-  const [cart, setCart] = useState({
-    product: [],
-  });
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   function onSubmit() {
-    let data = {
+    let editedProduct = {
       nama,
       harga,
-      // foto_produk,
       stock,
       kategori,
       deskripsi
     };
 
-    dispatch(editProduct(props.id, data))
+    let fd = new FormData();
+    fd.append('data', JSON.stringify(editedProduct));
+    fd.append('images', selectedFiles[0]);
+
+    dispatch(editProduct(props.id, fd))
     setDialogEdit(false)
     // let getData = JSON.parse(localStorage.getItem("cart")) || [];
     // getData.push(data);
@@ -65,17 +64,11 @@ export default function CardComponent(props) {
   const handleEdit = () =>{
     setDialogEdit(true)
   }
-  // function getCartTotal(){
-  //   return cart.reduce((sum, {quantity}) => sum + quantity, 0)
-  // }
 
-  // function onSubmit() {
-  //   productToCart();
-  // }
-
-  // useEffect(() => {
-  //   productToCart();
-  // }, []);
+  const selectFile = (e) => {
+    setSelectedFiles(e.target.files);
+    console.log(selectedFiles);
+  }
 
   return (
     <div>
@@ -110,71 +103,69 @@ export default function CardComponent(props) {
     </Card>
 
     <Dialog open={dialogEdit} onClose={() => setDialogEdit(false)}>
-            <DialogTitle>EDIT DATA</DialogTitle>
-            <form >
+        <DialogTitle>EDIT DATA</DialogTitle>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <TextField
+              autoComplete="fname"
+              name="Nama"
+              variant="outlined"
+              required
+              fullWidth
+              id="Nama"
+              label="Nama"
+              autoFocus
+              value={nama}
+              onChange={e => setNama(e.target.value)}
+            />
+          </Grid>
 
-            <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="fname"
-                name="Nama"
-                variant="outlined"
-                required
-                fullWidth
-                id="Nama"
-                label="Nama"
-                autoFocus
-                value={nama}
-                onChange={e => setNama(e.target.value)}
-              />
-            </Grid>
+          <Grid item xs={12}>
+            <TextField
+              autoComplete="Deskripsi"
+              name="Deskripsi"
+              variant="outlined"
+              required
+              fullWidth
+              id="Deskripsi"
+              label="Deskripsi"
+              autoFocus
+              value={deskripsi}
+              onChange={e => setDeskripsi(e.target.value)}
+            />
+          </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="Deskripsi"
-                name="Deskripsi"
-                variant="outlined"
-                required
-                fullWidth
-                id="Deskripsi"
-                label="Deskripsi"
-                autoFocus
-                value={deskripsi}
-                onChange={e => setDeskripsi(e.target.value)}
-              />
-            </Grid>
+          <Grid item xs={12}>
+            <TextField
+              autoComplete="fname"
+              name="Harga"
+              variant="outlined"
+              required
+              fullWidth
+              id="Harga"
+              label="Harga"
+              autoFocus
+              value={harga}
+              onChange={e => setHarga(e.target.value)}
+            />
+          </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="fname"
-                name="Harga"
-                variant="outlined"
-                required
-                fullWidth
-                id="Harga"
-                label="Harga"
-                autoFocus
-                value={harga}
-                onChange={e => setHarga(e.target.value)}
-              />
-            </Grid>
+          <Grid item xs={12}>
+            <TextField
+              autoComplete="stock"
+              name="Stock"
+              variant="outlined"
+              required
+              fullWidth
+              id="Stock"
+              label="Stock"
+              autoFocus
+              value={stock}
+              onChange={e => setStock(e.target.value)}
+            />
+          </Grid>
 
-            <Grid item xs={12}>
-              <TextField
-                autoComplete="stock"
-                name="Stock"
-                variant="outlined"
-                required
-                fullWidth
-                id="Stock"
-                label="Stock"
-                autoFocus
-                value={stock}
-                onChange={e => setStock(e.target.value)}
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={6} >
+          <Grid item xs={12}>
             <InputLabel htmlFor="filled-age-native-simple">Category</InputLabel>
             <Select
                 native
@@ -194,18 +185,31 @@ export default function CardComponent(props) {
                 <option value='ALERGI'>ALERGI</option>
                 <option value='HIPERTENSI'>HIPERTENSI</option>
                 <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
-
             </Select>
+          </Grid>
+          <Grid item xs={12}>
+              <InputLabel htmlFor="filled-age-native-simple">Foto Obat Jadi</InputLabel>
+              <div className="row mb-3">
+                <div className="col-3 mx-1 my-2">
+                  <label htmlFor="contained-button-file">
+                    <input accept="image/*" id="contained-button-file" multiple type="file" hidden onChange={selectFile} />
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                </div>
+                <div className="col-5 my-3">
+                  {selectedFiles && selectedFiles.length > 0 ? selectedFiles[0].name : "No file chosen"}
+                </div>
+              </div>
             </Grid>
 
-            <DialogActions>
-              <Button onClick={() => setDialogEdit(false)}>Cancel</Button>
-              <Button onClick={() => onSubmit()}>Submit</Button>
-            </DialogActions>
-            </Grid>
-            </form>
-
-          </Dialog>
+        </Grid>
+        <DialogActions>
+          <Button onClick={() => setDialogEdit(false)}>Cancel</Button>
+          <Button onClick={() => onSubmit()}>Submit</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
