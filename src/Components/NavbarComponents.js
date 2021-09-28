@@ -71,6 +71,11 @@ export default function NavbarComponents() {
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link>
+              <Link className="LinkRoute" to="/BahanBaku">
+                Bahan Baku
+              </Link>
+            </Nav.Link>
+            <Nav.Link>
               <Link className="LinkRoute" to="/Report">
                 Sales Report
               </Link>

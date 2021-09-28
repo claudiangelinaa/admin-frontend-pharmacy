@@ -9,7 +9,7 @@ import ProductCustom from "./Pages/ProductCustom";
 import Report from "./Pages/Report";
 import Revenue from "./Pages/Revenue";
 import Login from "./Pages/Login"
-import Register from "./Pages/Register"
+import BahanBaku from "./Pages/BahanBaku"
 import Forbidden from "./Pages/Forbidden";
 
 function App() {
@@ -33,6 +33,9 @@ function App() {
           </Route>
           <Route exact path="/RacikTransaction">
             <RacikHistory />
+          </Route>
+          <Route exact path="/BahanBaku">
+            <BahanBaku />
           </Route>
           <Route exact path="/Login">
             <Login />
