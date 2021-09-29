@@ -7,34 +7,59 @@ import axios from "axios";
 import "../Styles/Products.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addProduct, fetchProducts } from "../Store/Actions/productsAction";
-import LoadingComponent from "../Components/LoadingComponent";
+// <<<<<<< feature/raw-usage-order
+// import { addProduct, fetchProducts } from "../Store/Actions/productsAction";
+// import LoadingComponent from "../Components/LoadingComponent";
+// import ButtonComponent from "../Components/ButtonComponent";
+// import {
+//   Dialog,
+//   DialogActions,
+//   DialogTitle,
+//   Button,
+//   Grid,
+//   TextField,
+//   InputLabel,
+//   Select,
+//   Input,
+// } from "@material-ui/core";
+// =======
+import { addProduct, fetchProducts, fetchCategory } from "../Store/Actions/productsAction";
+import LoadingComponent from "../Components/LoadingComponent"
 import ButtonComponent from "../Components/ButtonComponent";
-import {
-  Dialog,
-  DialogActions,
-  DialogTitle,
-  Button,
-  Grid,
-  TextField,
-  InputLabel,
-  Select,
-  Input,
-} from "@material-ui/core";
+import PaginateComponent from "../Components/PaginateComponent";
+import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select, Input } from "@material-ui/core";
 
 export default function ProductsPage() {
+  useEffect(() => {
+    dispatch(fetchProducts())
+    dispatch(fetchCategory())
+  }, [])
   // const [products, setProducts] = useState([]);
-  const { products, isLoading } = useSelector((state) => state.productsReducer);
-  const dispatch = useDispatch();
+// <<<<<<< feature/raw-usage-order
+//   const { products, isLoading } = useSelector((state) => state.productsReducer);
+//   const dispatch = useDispatch();
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [postsPerPage] = useState(4);
+//   const [dialogAdd, setDialogAdd] = useState(false);
+//   const [nama, setNama] = useState("");
+//   const [deskripsi, setDeskripsi] = useState("");
+//   const [kategori, setKategori] = useState("");
+//   const [stock, setStock] = useState();
+//   const [harga, setHarga] = useState();
+
+// =======
+  const { products, isLoading, category } = useSelector(state => state.productsReducer)
+  const dispatch = useDispatch()
+  const [dialogAdd, setDialogAdd] = useState(false)
+  const [nama, setNama] = useState("")
+  const [deskripsi, setDeskripsi] = useState("")
+  const [kategori, setKategori] = useState("")
+  const [stock, setStock] = useState()
+  const [harga, setHarga] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(4);
-  const [dialogAdd, setDialogAdd] = useState(false);
-  const [nama, setNama] = useState("");
-  const [deskripsi, setDeskripsi] = useState("");
-  const [kategori, setKategori] = useState("");
-  const [stock, setStock] = useState();
-  const [harga, setHarga] = useState();
-
+  const [productsView, setProductsView] = useState(products);
+// >>>>>>> development
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleAddData = () => {
@@ -68,14 +93,26 @@ export default function ProductsPage() {
     setSelectedFiles([]);
   };
 
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+// <<<<<<< feature/raw-usage-order
+//   useEffect(() => {
+//     dispatch(fetchProducts());
+//   }, []);
 
-  // Get current posts
+//   // Get current posts
+//   const indexOfLastPost = currentPage * postsPerPage;
+//   const indexOfFirstPost = indexOfLastPost - postsPerPage;
+//   const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+// =======
+  
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+  let currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+  // console.log("products:", products)
+  // console.log("productsView:", productsView)
+  if(productsView.length > 0) {
+    currentPosts = productsView.slice(indexOfFirstPost, indexOfLastPost);
+  }
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -166,25 +203,49 @@ export default function ProductsPage() {
                 Category
               </InputLabel>
               <Select
-                native
-                variant="outlined"
-                value={kategori}
-                inputProps={{
-                  name: "gender",
-                  id: "outlined-gender-native-simple",
-                }}
-                onChange={(e) => {
-                  setKategori(e.target.value);
-                }}
+// <<<<<<< feature/raw-usage-order
+//                 native
+//                 variant="outlined"
+//                 value={kategori}
+//                 inputProps={{
+//                   name: "gender",
+//                   id: "outlined-gender-native-simple",
+//                 }}
+//                 onChange={(e) => {
+//                   setKategori(e.target.value);
+//                 }}
+//               >
+//                 <option aria-label="None" value="" />
+//                 <option value="BATUK DAN FLU">BATUK DAN FLU</option>
+//                 <option value="DEMAM">DEMAM</option>
+//                 <option value="ANTI NYERI">ANTI NYERI</option>
+//                 <option value="ANTI INFLAMASI">ANTI INFLAMASI</option>
+//                 <option value="ALERGI">ALERGI</option>
+//                 <option value="HIPERTENSI">HIPERTENSI</option>
+//                 <option value="SALURAN KEMIH">SALURAN KEMIH</option>
+// =======
+                  native
+                  variant="outlined"
+                  value={kategori}
+                  inputProps={{
+                      name: 'kategori',
+                      id: 'outlined-kategori-native-simple',
+                  }}
+                  onChange={e=>{setKategori(e.target.value)}}
               >
-                <option aria-label="None" value="" />
-                <option value="BATUK DAN FLU">BATUK DAN FLU</option>
-                <option value="DEMAM">DEMAM</option>
-                <option value="ANTI NYERI">ANTI NYERI</option>
-                <option value="ANTI INFLAMASI">ANTI INFLAMASI</option>
-                <option value="ALERGI">ALERGI</option>
-                <option value="HIPERTENSI">HIPERTENSI</option>
-                <option value="SALURAN KEMIH">SALURAN KEMIH</option>
+                  <option aria-label="Kategori" value="" />
+                  Kategori
+                  {category.map((value)=>{
+                    return(
+                      <option value={value}>{value}</option>
+                      // <option value='DEMAM'>DEMAM</option>
+                      // <option value='ANTI NYERI'>ANTI NYERI</option>
+                      // <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
+                      // <option value='ALERGI'>ALERGI</option>
+                      // <option value='HIPERTENSI'>HIPERTENSI</option>
+                      // <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+                      )
+                    })}
               </Select>
             </Grid>
             <Grid item xs={12}>
@@ -230,18 +291,33 @@ export default function ProductsPage() {
         </Button>
       </div>
       <div className="Products">
-        {currentPosts.map((val) => {
+// <<<<<<< feature/raw-usage-order
+//         {currentPosts.map((val) => {
+//           return (
+//             <>
+//               <CardComponent
+//                 id={val.id}
+//                 foto_produk={val.foto_produk}
+//                 nama={val.nama}
+//                 deskripsi={val.deskripsi}
+//                 harga={val.harga}
+//                 stock={val.stock}
+//                 kategori={val.kategori}
+//               />
+// =======
+        {currentPosts.map(val=>{
           return (
             <>
-              <CardComponent
-                id={val.id}
-                foto_produk={val.foto_produk}
-                nama={val.nama}
-                deskripsi={val.deskripsi}
-                harga={val.harga}
-                stock={val.stock}
-                kategori={val.kategori}
-              />
+            <CardComponent
+              id={val.id} 
+              foto_produk={val.foto_produk}
+              nama={val.nama}
+              deskripsi={val.deskripsi}
+              harga={val.harga}
+              stock={val.stock}
+              kategori={val.kategori}
+              category={category}
+            />
             </>
           );
         })}
@@ -253,6 +329,11 @@ export default function ProductsPage() {
           paginate={paginate}
         />
       </div>
+      <PaginateComponent
+        postsPerPage={postsPerPage}
+        totalPosts={productsView.length > 0 ? productsView.length : products.length}
+        paginate={paginate}
+      />
     </div>
   );
 }

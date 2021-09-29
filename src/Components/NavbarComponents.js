@@ -48,18 +48,14 @@ export default function NavbarComponents() {
                 Home
               </Link>
             </Nav.Link>
-            <NavDropdown title="Products" id="navbarScrollingDropdown">
-              <NavDropdown.Item>
-                <Link className="LinkRoute" to="/ProductCustom">
-                  Product Custom
-                </Link>
-              </NavDropdown.Item>
-              <NavDropdown.Item>
+
+            {auth.isLogin ? (
+              <>
+              <Nav.Link>
                 <Link className="LinkRoute" to="/Products">
                   Product
                 </Link>
-              </NavDropdown.Item>
-            </NavDropdown>
+              </Nav.Link>
             <NavDropdown title="User Transaction" id="navbarScrollingDropdown">
               <NavDropdown.Item>
                 <Link className="LinkRoute" to="/Transaction">
@@ -94,6 +90,11 @@ export default function NavbarComponents() {
                 Revenue
               </Link>
             </Nav.Link>
+              </>
+            ) :
+            <>
+            </>
+            }
           </Nav>
         </Container>
 
