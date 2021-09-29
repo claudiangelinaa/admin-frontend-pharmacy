@@ -39,11 +39,13 @@ export default function TableComponent(props) {
     let index = newBahanBakuList.findIndex(ele => ele.bahan_baku === bahanBakuSelected)
     if(index >= 0) {
       newBahanBakuList[index].qty = parseInt(bahanBakuQty)
+      newBahanBakuList[index].harga = parseInt(bahanBaku[indexReducer].harga) * parseInt(bahanBakuQty)
       newBahanBakuList[index].id = parseInt(bahanBaku[indexReducer].id)
     } else {
       // console.log(bahanBaku[indexReducer].id)
       newBahanBakuList = [...newBahanBakuList, {
         id: bahanBaku[indexReducer].id,
+        harga: parseInt(bahanBaku[indexReducer].harga) * parseInt(bahanBakuQty),
         bahan_baku: bahanBakuSelected,
         qty: parseInt(bahanBakuQty)
       }]
@@ -104,6 +106,9 @@ export default function TableComponent(props) {
                   </div>
                   <div className="col-2">
                     {ele.qty}
+                  </div>
+                  <div className="col-2">
+                    {ele.harga}
                   </div>
                 </li>
               )
