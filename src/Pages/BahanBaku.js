@@ -30,6 +30,7 @@ const BahanBaku = () => {
     .then((res) => {
       alert(`Tambah stock sukses`)
       setDialogAddStock(false)
+      window.location.reload()
     })
     .catch((err) => {
       console.log(err)
