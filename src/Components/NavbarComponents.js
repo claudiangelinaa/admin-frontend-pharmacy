@@ -46,6 +46,9 @@ export default function NavbarComponents() {
                 Home
               </Link>
             </Nav.Link>
+
+            {auth.isLogin ? (
+              <>
               <Nav.Link>
                 <Link className="LinkRoute" to="/Products">
                   Product
@@ -78,6 +81,11 @@ export default function NavbarComponents() {
                 Revenue
               </Link>
             </Nav.Link>
+              </>
+            ) :
+            <>
+            </>
+            }
           </Nav>
         </Container>
 

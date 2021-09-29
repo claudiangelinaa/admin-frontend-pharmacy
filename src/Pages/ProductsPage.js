@@ -153,17 +153,19 @@ export default function ProductsPage() {
                   }}
                   onChange={e=>{setKategori(e.target.value)}}
               >
-                  <option aria-label="None" value="" />
-
+                  <option aria-label="Kategori" value="" />
+                  Kategori
                   {category.map((value)=>{
-                    <option value={value}>{value}</option>
-                    // <option value='DEMAM'>DEMAM</option>
-                    // <option value='ANTI NYERI'>ANTI NYERI</option>
-                    // <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
-                    // <option value='ALERGI'>ALERGI</option>
-                    // <option value='HIPERTENSI'>HIPERTENSI</option>
-                    // <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
-                  })}
+                    return(
+                      <option value={value}>{value}</option>
+                      // <option value='DEMAM'>DEMAM</option>
+                      // <option value='ANTI NYERI'>ANTI NYERI</option>
+                      // <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
+                      // <option value='ALERGI'>ALERGI</option>
+                      // <option value='HIPERTENSI'>HIPERTENSI</option>
+                      // <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+                      )
+                    })}
               </Select>
             </Grid>
             <Grid item xs={12}>
@@ -209,6 +211,7 @@ export default function ProductsPage() {
               harga={val.harga}
               stock={val.stock}
               kategori={val.kategori}
+              category={category}
             />
             
             </>
