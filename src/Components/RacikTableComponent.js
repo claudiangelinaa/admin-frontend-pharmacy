@@ -178,7 +178,6 @@ export default function TableComponent(props) {
             <th>Transaksi ID</th>
             <th>Nama User</th>
             <th>Resep</th>
-            <th>Quantity</th>
             <th>Tanggal</th>
             <th>Status</th>
             <th>Action</th>
@@ -189,7 +188,6 @@ export default function TableComponent(props) {
             <td>{props.id}</td>
             <td>{props.nama_user}</td>
             <td><img style={{ height: "80px", width: "80px" }} src={props.resep_image} /></td>
-            <td>{props.komposisi_quantity} ml</td>
             <td>{props.tanggal}</td>
             <td>
               <div
