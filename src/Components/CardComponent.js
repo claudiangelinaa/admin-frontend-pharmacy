@@ -12,7 +12,7 @@ import ButtonComponent from "../Components/ButtonComponent";
 import { convertToRupiah } from "../helpers/convertToRupiah";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
-import { editProduct, fetchProduct } from "../Store/Actions/productsAction";
+import { editProduct, fetchProduct, fetchCategory } from "../Store/Actions/productsAction";
 import { deleteProduct } from "../Store/Actions/productsAction";
 import { Dialog, DialogActions, DialogTitle, Grid, InputLabel, Select, TextField } from "@material-ui/core";
 
@@ -178,13 +178,17 @@ export default function CardComponent(props) {
                 onChange={e=>{setKategori(e.target.value)}}
             >
                 <option aria-label="None" value="" />
-                <option value='BATUK DAN FLU'>BATUK DAN FLU</option>
-                <option value='DEMAM'>DEMAM</option>
-                <option value='ANTI NYERI'>ANTI NYERI</option>
-                <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
-                <option value='ALERGI'>ALERGI</option>
-                <option value='HIPERTENSI'>HIPERTENSI</option>
-                <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+                {props.category.map((value)=>{
+                  return(
+                    <option value={value}>{value}</option>
+                    // <option value='DEMAM'>DEMAM</option>
+                    // <option value='ANTI NYERI'>ANTI NYERI</option>
+                    // <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
+                    // <option value='ALERGI'>ALERGI</option>
+                    // <option value='HIPERTENSI'>HIPERTENSI</option>
+                    // <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+                  )
+                })}
             </Select>
           </Grid>
           <Grid item xs={12}>
