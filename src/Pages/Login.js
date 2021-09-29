@@ -64,7 +64,13 @@ export default function SignIn() {
     e.preventDefault();
     axios.post(`${url}/users/login`,({email,password}))
     .then((res)=>{
-      console.log(res);
+      console.log("login:", res.data);
+      if(res.data.role.toLowerCase() !== "admin") {
+        alert(`Unauthorized!`)
+        history.push("/Forbidden")
+        return
+      }
+
       if(res.data.status !== "error") {
         dispatch(doLogin(res.data))
         localStorage.setItem('access_token', res.data.token)
