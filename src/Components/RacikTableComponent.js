@@ -61,6 +61,21 @@ export default function TableComponent(props) {
     })
     .then((res) => {
       console.log(res.data)
+
+      for (let i = 0; i < bahanBakuList.length; i++) {
+        axios.post(`${url}/obatCustom/update`, {
+          obat_racik_id: bahanBakuList[i].id,
+          quantity: bahanBakuList[i].qty
+        })
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      }
+
       alert(`Sukses input obat!`)
       setDialogProcess(false)
     })
