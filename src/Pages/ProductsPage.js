@@ -1,76 +1,97 @@
 import React, { useEffect, useState } from "react";
 import CardComponent from "../Components/CardComponent";
 import SearchBarComponent from "../Components/SearchBarComponent";
+import PaginateComponent from "../Components/PaginateComponent";
 import { useHistory } from "react-router";
 import axios from "axios";
 import "../Styles/Products.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { addProduct, fetchProducts } from "../Store/Actions/productsAction";
-import LoadingComponent from "../Components/LoadingComponent"
+import LoadingComponent from "../Components/LoadingComponent";
 import ButtonComponent from "../Components/ButtonComponent";
-import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select, Input } from "@material-ui/core";
+import {
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Button,
+  Grid,
+  TextField,
+  InputLabel,
+  Select,
+  Input,
+} from "@material-ui/core";
 
 export default function ProductsPage() {
   // const [products, setProducts] = useState([]);
-  const { products, isLoading } = useSelector(state => state.productsReducer)
-  const dispatch = useDispatch()
-  const [dialogAdd, setDialogAdd] = useState(false)
-  const [nama, setNama] = useState("")
-  const [deskripsi, setDeskripsi] = useState("")
-  const [kategori, setKategori] = useState("")
-  const [stock, setStock] = useState()
-  const [harga, setHarga] = useState()
+  const { products, isLoading } = useSelector((state) => state.productsReducer);
+  const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(4);
+  const [dialogAdd, setDialogAdd] = useState(false);
+  const [nama, setNama] = useState("");
+  const [deskripsi, setDeskripsi] = useState("");
+  const [kategori, setKategori] = useState("");
+  const [stock, setStock] = useState();
+  const [harga, setHarga] = useState();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const handleAddData = () =>{
-    setDialogAdd(true)
-  }
+  const handleAddData = () => {
+    setDialogAdd(true);
+  };
 
-  const handleSubmit = () =>{
+  const handleSubmit = () => {
     let newProduct = {
       nama,
       harga,
       kategori,
       stock,
-      deskripsi
-    }
+      deskripsi,
+    };
 
     let fd = new FormData();
-    fd.append('data', JSON.stringify(newProduct));
-    fd.append('images', selectedFiles[0]);
-    console.log("selectfile:", selectedFiles)
-    console.log("fd", fd)
-    console.log("newProduct", JSON.stringify(newProduct))
+    fd.append("data", JSON.stringify(newProduct));
+    fd.append("images", selectedFiles[0]);
+    console.log("selectfile:", selectedFiles);
+    console.log("fd", fd);
+    console.log("newProduct", JSON.stringify(newProduct));
 
-    dispatch(addProduct(fd))
-    alert(`Berhasil tambah data`)
-    setDialogAdd(false)
-    setNama("")
-    setHarga("")
-    setKategori("")
-    setDeskripsi("")
-    setStock("")
-    setSelectedFiles([])
-  }
+    dispatch(addProduct(fd));
+    alert(`Berhasil tambah data`);
+    setDialogAdd(false);
+    setNama("");
+    setHarga("");
+    setKategori("");
+    setDeskripsi("");
+    setStock("");
+    setSelectedFiles([]);
+  };
 
   useEffect(() => {
-    dispatch(fetchProducts())
-  }, [])
+    dispatch(fetchProducts());
+  }, []);
 
-  if(isLoading){
+  // Get current posts
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  if (isLoading) {
     return (
       <>
-      <LoadingComponent />
+        <LoadingComponent />
       </>
-    )
+    );
   }
 
   const selectFile = (e) => {
     setSelectedFiles(e.target.files);
     console.log(selectedFiles);
-  }
+  };
 
   return (
     <div className="ProductPage">
@@ -91,7 +112,7 @@ export default function ProductsPage() {
                 label="Nama"
                 autoFocus
                 value={nama}
-                onChange={e => setNama(e.target.value)}
+                onChange={(e) => setNama(e.target.value)}
               />
             </Grid>
 
@@ -106,7 +127,7 @@ export default function ProductsPage() {
                 label="Deskripsi"
                 autoFocus
                 value={deskripsi}
-                onChange={e => setDeskripsi(e.target.value)}
+                onChange={(e) => setDeskripsi(e.target.value)}
               />
             </Grid>
 
@@ -121,7 +142,7 @@ export default function ProductsPage() {
                 label="Harga"
                 autoFocus
                 value={harga}
-                onChange={e => setHarga(e.target.value)}
+                onChange={(e) => setHarga(e.target.value)}
               />
             </Grid>
 
@@ -136,45 +157,60 @@ export default function ProductsPage() {
                 label="Stock"
                 autoFocus
                 value={stock}
-                onChange={e => setStock(e.target.value)}
+                onChange={(e) => setStock(e.target.value)}
               />
             </Grid>
 
-            <Grid item xs={12} >
-              <InputLabel htmlFor="filled-age-native-simple">Category</InputLabel>
+            <Grid item xs={12}>
+              <InputLabel htmlFor="filled-age-native-simple">
+                Category
+              </InputLabel>
               <Select
-                  native
-                  variant="outlined"
-                  value={kategori}
-                  inputProps={{
-                      name: 'gender',
-                      id: 'outlined-gender-native-simple',
-                  }}
-                  onChange={e=>{setKategori(e.target.value)}}
+                native
+                variant="outlined"
+                value={kategori}
+                inputProps={{
+                  name: "gender",
+                  id: "outlined-gender-native-simple",
+                }}
+                onChange={(e) => {
+                  setKategori(e.target.value);
+                }}
               >
-                  <option aria-label="None" value="" />
-                  <option value='BATUK DAN FLU'>BATUK DAN FLU</option>
-                  <option value='DEMAM'>DEMAM</option>
-                  <option value='ANTI NYERI'>ANTI NYERI</option>
-                  <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
-                  <option value='ALERGI'>ALERGI</option>
-                  <option value='HIPERTENSI'>HIPERTENSI</option>
-                  <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+                <option aria-label="None" value="" />
+                <option value="BATUK DAN FLU">BATUK DAN FLU</option>
+                <option value="DEMAM">DEMAM</option>
+                <option value="ANTI NYERI">ANTI NYERI</option>
+                <option value="ANTI INFLAMASI">ANTI INFLAMASI</option>
+                <option value="ALERGI">ALERGI</option>
+                <option value="HIPERTENSI">HIPERTENSI</option>
+                <option value="SALURAN KEMIH">SALURAN KEMIH</option>
               </Select>
             </Grid>
             <Grid item xs={12}>
-              <InputLabel htmlFor="filled-age-native-simple">Foto Obat Jadi</InputLabel>
+              <InputLabel htmlFor="filled-age-native-simple">
+                Foto Obat Jadi
+              </InputLabel>
               <div className="row mb-3">
                 <div className="col-3 mx-1 my-2">
                   <label htmlFor="contained-button-file">
-                    <input accept="image/*" id="contained-button-file" multiple type="file" hidden onChange={selectFile} />
+                    <input
+                      accept="image/*"
+                      id="contained-button-file"
+                      multiple
+                      type="file"
+                      hidden
+                      onChange={selectFile}
+                    />
                     <Button variant="contained" component="span">
                       Upload
                     </Button>
                   </label>
                 </div>
                 <div className="col-5 my-3">
-                  {selectedFiles && selectedFiles.length > 0 ? selectedFiles[0].name : "No file chosen"}
+                  {selectedFiles && selectedFiles.length > 0
+                    ? selectedFiles[0].name
+                    : "No file chosen"}
                 </div>
               </div>
             </Grid>
@@ -189,26 +225,33 @@ export default function ProductsPage() {
         <SearchBarComponent />
       </div>
       <div className="AddProductButton">
-        <Button variant="outlined" onClick={()=>handleAddData()}>
+        <Button variant="outlined" onClick={() => handleAddData()}>
           ADD OBAT JADI
         </Button>
       </div>
       <div className="Products">
-        {products.map(val=>{
+        {currentPosts.map((val) => {
           return (
             <>
-            <CardComponent
-              id={val.id} 
-              foto_produk={val.foto_produk}
-              nama={val.nama}
-              deskripsi={val.deskripsi}
-              harga={val.harga}
-              stock={val.stock}
-              kategori={val.kategori}
-            />
-            
+              <CardComponent
+                id={val.id}
+                foto_produk={val.foto_produk}
+                nama={val.nama}
+                deskripsi={val.deskripsi}
+                harga={val.harga}
+                stock={val.stock}
+                kategori={val.kategori}
+              />
             </>
-          )})}
+          );
+        })}
+      </div>
+      <div className="Paginate">
+        <PaginateComponent
+          postsPerPage={postsPerPage}
+          totalPosts={products.length}
+          paginate={paginate}
+        />
       </div>
     </div>
   );

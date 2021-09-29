@@ -50,11 +50,6 @@ export default function Report() {
     }
   }
 
-  useEffect(() => {
-    chartData();
-    dispatch(fetchReport(month));
-  }, [month]);
-
   function chartData() {
     setChart({
       labels: [
@@ -91,6 +86,11 @@ export default function Report() {
       ],
     });
   }
+
+  useEffect(() => {
+    chartData();
+    dispatch(fetchReport(month));
+  }, [month]);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;

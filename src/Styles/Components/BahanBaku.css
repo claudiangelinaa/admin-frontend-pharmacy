@@ -1,0 +1,11 @@
+.BahanBaku {
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    margin: 30px 100px;
+    width: 70%;
+}
+
+.BahanBaku .TableBorder {
+    margin-top: 40px;
+}

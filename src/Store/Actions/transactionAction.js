@@ -58,7 +58,7 @@ export function fetchReport(params) {
     axios
       .get(`${url}/sales-report?date=${params === "" ? "" : Number(params)}`)
       .then((res) => {
-        let data = res.data.result;
+        let data = res.data.result
         let result = data.reduce((acc, ele) => {
           let filtered = acc.filter((el) => el.id == ele.id);
           if (filtered.length > 0) {

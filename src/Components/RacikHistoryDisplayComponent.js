@@ -27,6 +27,7 @@ export default function RacikHistoryDisplayComponent(props) {
               <RacikTableComponent
                 id={val.id}
                 nama_user={val.nama}
+                komposisi_quantity={val.komposisi_quantity}
                 status={val.status}
                 tanggal={moment(val.tanggal).format("LL")}
                 resep_image={val.resep_image}
