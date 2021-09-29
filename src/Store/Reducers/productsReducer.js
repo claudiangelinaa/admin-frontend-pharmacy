@@ -10,6 +10,7 @@ const initialState = {
   products: [],
   product: [],
   isLoading: false,
+  category: []
 };
 
 export default (state = initialState, action) => {
@@ -48,6 +49,13 @@ export default (state = initialState, action) => {
         products: [...state.products, action.payload],
       };
     }
+
+    case "FETCH_CATEGORY": {
+      return {
+      ...state,
+      category: action.payload
+    };
+  }
 
     default:
       return {
