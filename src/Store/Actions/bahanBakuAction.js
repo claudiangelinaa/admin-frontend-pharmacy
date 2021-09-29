@@ -5,7 +5,7 @@ export function fetchBahanBaku() {
   return (dispatch) => {
     axios.get(`${url}/bahanBaku`)
     .then((res) => {
-      // console.log(res.data)
+      console.log(res.data)
       dispatch({
         type: "FETCH_BAHAN_BAKU",
         payload: res.data.result

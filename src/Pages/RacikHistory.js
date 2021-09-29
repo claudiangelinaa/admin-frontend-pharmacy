@@ -24,25 +24,23 @@ export default function RacikHistory() {
   );
 
   useEffect(() => {
-    axios.get(`${url}/getRacikTransaction`)
-    .then((res) => {
-      setTransactionList(res.data.result)
-      console.log("getRacik:", transactionList)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
+    axios
+      .get(`${url}/getRacikTransaction`)
+      .then((res) => {
+        setTransactionList(res.data.result);
+        console.log("getRacik:", transactionList);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = transactionList.slice(
-    indexOfFirstPost,
-    indexOfLastPost
-  );
-  console.log("currentPosts:", currentPosts)
-  console.log("history:", historyTransaction)
+  const currentPosts = transactionList.slice(indexOfFirstPost, indexOfLastPost);
+  console.log("currentPosts:", currentPosts);
+  console.log("history:", historyTransaction);
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -70,11 +68,10 @@ export default function RacikHistory() {
         Date
       </Button> */}
       <div className="TableHistory">
-        <RacikHistoryDisplayComponent 
+        <RacikHistoryDisplayComponent
           isLoading={isLoading}
-          currentPosts={filteredName ? filteredTransaction : currentPosts }
+          currentPosts={filteredName ? filteredTransaction : currentPosts}
         />
-
       </div>
 
       <PaginateComponent

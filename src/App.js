@@ -11,6 +11,7 @@ import Revenue from "./Pages/Revenue";
 import Login from "./Pages/Login"
 import BahanBaku from "./Pages/BahanBaku"
 import Forbidden from "./Pages/Forbidden";
+import BahanBakuRecord from "./Pages/BahanBakuRecord";
 
 function App() {
   return (
@@ -48,6 +49,9 @@ function App() {
           </Route>
           <Route exact path="/Forbidden">
             <Forbidden />
+          </Route>
+          <Route exact path="/BahanBakuRecord">
+            <BahanBakuRecord />
           </Route>
         </Switch>
       </div>
