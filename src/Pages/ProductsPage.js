@@ -9,9 +9,14 @@ import { useDispatch } from "react-redux";
 import { addProduct, fetchProducts, fetchCategory } from "../Store/Actions/productsAction";
 import LoadingComponent from "../Components/LoadingComponent"
 import ButtonComponent from "../Components/ButtonComponent";
+import PaginateComponent from "../Components/PaginateComponent";
 import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select, Input } from "@material-ui/core";
 
 export default function ProductsPage() {
+  useEffect(() => {
+    dispatch(fetchProducts())
+    dispatch(fetchCategory())
+  }, [])
   // const [products, setProducts] = useState([]);
   const { products, isLoading, category } = useSelector(state => state.productsReducer)
   const dispatch = useDispatch()
@@ -21,7 +26,9 @@ export default function ProductsPage() {
   const [kategori, setKategori] = useState("")
   const [stock, setStock] = useState()
   const [harga, setHarga] = useState()
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(4);
+  const [productsView, setProductsView] = useState(products);
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleAddData = () =>{
@@ -55,10 +62,19 @@ export default function ProductsPage() {
     setSelectedFiles([])
   }
 
-  useEffect(() => {
-    dispatch(fetchProducts())
-    dispatch(fetchCategory())
-  }, [])
+  
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  let currentPosts = products.slice(indexOfFirstPost, indexOfLastPost);
+  // console.log("products:", products)
+  // console.log("productsView:", productsView)
+  if(productsView.length > 0) {
+    currentPosts = productsView.slice(indexOfFirstPost, indexOfLastPost);
+  }
+
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   if(isLoading){
     return (
@@ -200,7 +216,7 @@ export default function ProductsPage() {
         </Button>
       </div>
       <div className="Products">
-        {products.map(val=>{
+        {currentPosts.map(val=>{
           return (
             <>
             <CardComponent
@@ -217,6 +233,11 @@ export default function ProductsPage() {
             </>
           )})}
       </div>
+      <PaginateComponent
+        postsPerPage={postsPerPage}
+        totalPosts={productsView.length > 0 ? productsView.length : products.length}
+        paginate={paginate}
+      />
     </div>
   );
 }
