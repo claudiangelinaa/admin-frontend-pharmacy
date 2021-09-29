@@ -24,12 +24,12 @@ const BahanBaku = () => {
   }
 
   const handleSubmitStock = () => {
-    alert(`${currStock}, ${addStock}, ${selectedBahanBakuId}`)
     axios.post(`${url}/bahanbaku/${selectedBahanBakuId}/update/stock`, {
       stock: parseInt(currStock) + parseInt(addStock)
     })
     .then((res) => {
       alert(`Tambah stock sukses`)
+      setDialogAddStock(false)
     })
     .catch((err) => {
       console.log(err)
@@ -59,9 +59,9 @@ const BahanBaku = () => {
     },
     {
       field: 'stock',
-      headerName: 'Stock',
+      headerName: 'Stock per Botol',
       type: 'number',
-      width: 110,
+      width: 160,
       editable: true,
     },
     {
@@ -87,7 +87,6 @@ const BahanBaku = () => {
 
   return (
     <div className="px-5">
-      Bahan Baku
       <div style={{ height: 400, width: '100%' }}>
         <DataGrid
           rows={rows}
