@@ -26,7 +26,7 @@ import { useDispatch } from "react-redux";
 import { addProduct, fetchProducts, fetchCategory } from "../Store/Actions/productsAction";
 import LoadingComponent from "../Components/LoadingComponent"
 import ButtonComponent from "../Components/ButtonComponent";
-import PaginateComponent from "../Components/PaginateComponent";
+// import PaginateComponent from "../Components/PaginateComponent";
 import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select, Input } from "@material-ui/core";
 
 export default function ProductsPage() {
@@ -59,7 +59,6 @@ export default function ProductsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(4);
   const [productsView, setProductsView] = useState(products);
-// >>>>>>> development
   const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleAddData = () => {
@@ -291,20 +290,6 @@ export default function ProductsPage() {
         </Button>
       </div>
       <div className="Products">
-// <<<<<<< feature/raw-usage-order
-//         {currentPosts.map((val) => {
-//           return (
-//             <>
-//               <CardComponent
-//                 id={val.id}
-//                 foto_produk={val.foto_produk}
-//                 nama={val.nama}
-//                 deskripsi={val.deskripsi}
-//                 harga={val.harga}
-//                 stock={val.stock}
-//                 kategori={val.kategori}
-//               />
-// =======
         {currentPosts.map(val=>{
           return (
             <>
