@@ -6,14 +6,14 @@ import axios from "axios";
 import "../Styles/Products.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { addProduct, fetchProducts } from "../Store/Actions/productsAction";
+import { addProduct, fetchProducts, fetchCategory } from "../Store/Actions/productsAction";
 import LoadingComponent from "../Components/LoadingComponent"
 import ButtonComponent from "../Components/ButtonComponent";
 import { Dialog, DialogActions, DialogTitle, Button, Grid, TextField, InputLabel, Select, Input } from "@material-ui/core";
 
 export default function ProductsPage() {
   // const [products, setProducts] = useState([]);
-  const { products, isLoading } = useSelector(state => state.productsReducer)
+  const { products, isLoading, category } = useSelector(state => state.productsReducer)
   const dispatch = useDispatch()
   const [dialogAdd, setDialogAdd] = useState(false)
   const [nama, setNama] = useState("")
@@ -57,6 +57,7 @@ export default function ProductsPage() {
 
   useEffect(() => {
     dispatch(fetchProducts())
+    dispatch(fetchCategory())
   }, [])
 
   if(isLoading){
@@ -147,19 +148,22 @@ export default function ProductsPage() {
                   variant="outlined"
                   value={kategori}
                   inputProps={{
-                      name: 'gender',
-                      id: 'outlined-gender-native-simple',
+                      name: 'kategori',
+                      id: 'outlined-kategori-native-simple',
                   }}
                   onChange={e=>{setKategori(e.target.value)}}
               >
                   <option aria-label="None" value="" />
-                  <option value='BATUK DAN FLU'>BATUK DAN FLU</option>
-                  <option value='DEMAM'>DEMAM</option>
-                  <option value='ANTI NYERI'>ANTI NYERI</option>
-                  <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
-                  <option value='ALERGI'>ALERGI</option>
-                  <option value='HIPERTENSI'>HIPERTENSI</option>
-                  <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+
+                  {category.map((value)=>{
+                    <option value={value}>{value}</option>
+                    // <option value='DEMAM'>DEMAM</option>
+                    // <option value='ANTI NYERI'>ANTI NYERI</option>
+                    // <option value='ANTI INFLAMASI'>ANTI INFLAMASI</option>
+                    // <option value='ALERGI'>ALERGI</option>
+                    // <option value='HIPERTENSI'>HIPERTENSI</option>
+                    // <option value='SALURAN KEMIH'>SALURAN KEMIH</option>
+                  })}
               </Select>
             </Grid>
             <Grid item xs={12}>
